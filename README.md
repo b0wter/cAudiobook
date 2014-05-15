@@ -11,4 +11,3 @@ To Do
 * Control to pause playback.
 * Implement settings dialog (settings can currently be modified by editing a settings file).
 * Sleep timer.
-* 
