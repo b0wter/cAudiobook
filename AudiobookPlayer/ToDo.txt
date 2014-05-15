@@ -1,0 +1,5 @@
+﻿ToDo:
+=====
+
+Audiobook.cs
+	- Umbauen der Methoden zur Erstellung einer Instanz in statische Methoden, damit auch die serialisiertan Dateien benutzt werden können.

@@ -1,0 +1,52 @@
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookControl.baml
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookControl.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer_MarkupCompile.cache
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer_MarkupCompile.lref
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.g.resources
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.Properties.Resources.resources
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.csproj.GenerateResource.Cache
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\documents\visual studio 2012\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.csprojResolveAssemblyReference.cache
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\NAudio.dll
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\NAudio.WindowsMediaFormat.dll
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\NAudio.xml
+C:\Users\b0wter\Documents\Visual Studio 2012\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.exe.config
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.exe.config
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookControl.baml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookControl.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\App.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer_MarkupCompile.cache
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer_MarkupCompile.lref
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\NAudio.xml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\MainWindow.baml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.g.resources
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.Properties.Resources.resources
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.csproj.GenerateResource.Cache
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\AudiobookPlayer.csprojResolveAssemblyReference.cache
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\SettingsDialog.baml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\SettingsDialog.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\ImageSelector.baml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\obj\Debug\ImageSelector.g.cs
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\GoogleSearchAPI.dll
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1\WpfApplication1\bin\Debug\GoogleSearchAPI.xml
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6)\WpfApplication1\bin\Debug\AudiobookPlayer.exe.config
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6)\WpfApplication1\obj\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6)\WpfApplication1\obj\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6) - Copy\AudiobookPlayer\bin\Debug\AudiobookPlayer.exe.config
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6) - Copy\AudiobookPlayer\obj\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\Visual Studio 2013\Projects\WpfApplication1 - Copy (6) - Copy\AudiobookPlayer\obj\Debug\AudiobookPlayer.pdb
+C:\Users\b0wter\Documents\GitHub\cAudiobook\AudiobookPlayer\bin\Debug\AudiobookPlayer.exe.config
+C:\Users\b0wter\Documents\GitHub\cAudiobook\AudiobookPlayer\obj\Debug\AudiobookPlayer.exe
+C:\Users\b0wter\Documents\GitHub\cAudiobook\AudiobookPlayer\obj\Debug\AudiobookPlayer.pdb

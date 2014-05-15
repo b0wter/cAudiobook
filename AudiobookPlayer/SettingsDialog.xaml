@@ -1,0 +1,63 @@
+﻿<Window x:Class="AudiobookPlayer.SettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:AudiobookPlayer"
+        Title="SettingsDialog" Height="200" Width="350" ResizeMode="NoResize">
+	<Window.Resources>
+		<ControlTemplate x:Key="validationTemplate">
+			<DockPanel>
+				<TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+				<AdornedElementPlaceholder/>
+			</DockPanel>
+		</ControlTemplate>
+		<Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="true">
+					<Setter Property="ToolTip"
+						Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                              Path=(Validation.Errors)[0].ErrorContent}"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition Height="28"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="150"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Label Height="26" Grid.Row="0" Grid.Column="0" Content="Audiobook path" />
+		<Label Height="26" Grid.Row="1" Grid.Column="0" Content="Small skip (seconds)" />
+		<Label Height="26" Grid.Row="2" Grid.Column="0" Content="Large skip (seconds)" />
+		<Label Height="26" Grid.Row="3" Grid.Column="0" Content="Update intervall (seconds)" />
+		<Label Height="26" Grid.Row="4" Grid.Column="0" Content="Background Threads" />
+		<TextBox Height="24" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" Name="txtAudiobookPath" Validation.ErrorTemplate="{StaticResource validationTemplate}" />
+		<TextBox Height="24" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2" Name="txtSmallSkipSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
+		<TextBox Height="24" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2" Name="txtLargeSkipSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
+		<TextBox Height="24" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Name="txtUpdateIntervallSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
+		<TextBox Height="24" Grid.Row="4" Grid.Column="1" Margin="2,2,2,2" Name="txtBackgroundThreads" Validation.ErrorTemplate="{StaticResource validationTemplate}">
+			<TextBox.Text>
+				<Binding ElementName="This" Path="BackgroundThreads" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<local:ThreadRangeRule />
+					</Binding.ValidationRules>
+				</Binding>
+			</TextBox.Text>
+		</TextBox>
+		<Grid Grid.Row="5" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button Grid.Row="5" Grid.Column="0" Content="Ok" Margin="2,2,2,2"/>
+			<Button Grid.Row="5" Grid.Column="1" Content="Abort" Margin="2,2,2,2"/>
+		</Grid>
+	</Grid>
+</Window>
