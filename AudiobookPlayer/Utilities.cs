@@ -55,5 +55,8 @@ namespace AudiobookPlayer
 			DeleteObject(bmpPtr);
 			return bitmapSource;
 		}
+
+		[DllImport("dwmapi.dll", PreserveSig = false)]
+		public static extern bool DwmIsCompositionEnabled();
 	}
 }

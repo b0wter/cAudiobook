@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Windows.Interop;
 
 namespace AudiobookPlayer
 {
@@ -22,6 +23,7 @@ namespace AudiobookPlayer
 		System.Windows.Threading.DispatcherTimer audiobook_update_timer;
 		Config config = new Config();
 		List<System.Drawing.Image> images;
+		Size window_size;
 
 		public MainWindow()
 		{
@@ -85,13 +87,12 @@ namespace AudiobookPlayer
 		{
 			GetControlForAudiobook(current_audiobook).pbProgress.Value = current_audiobook.Progress;
 			pbNowPlayingProgress.Value = current_audiobook.Progress;
-			txtNowPlayingTitle.Text = current_audiobook.Name;
-			lblProgress.Content = current_audiobook.PositionAsTimeSpan.ToString() + " / " + current_audiobook.LengthAsTimeSpan.ToString();
+			lblProgress.Content = current_audiobook.PositionAsTimeSpan.ToString() + " / " + current_audiobook.LengthAsTimeSpan.ToString() + " (" + current_audiobook.Name + ")";
 		}
 
 		void AudiobookScan_OnScanFinished(object source, AudioBookArgs e)
 		{
-			Dispatcher.Invoke(new Action(() => { var control = new AudiobookControl(e.Audiobook);control.Margin = new Thickness(5); wpAudiobooks.Children.Add(control); control.MouseDoubleClick += AudiobookControl_MouseDoubleClick; }));
+			Dispatcher.Invoke(new Action(() => { var control = new AudiobookControl(e.Audiobook); control.Margin = new Thickness(5); wpAudiobooks.Children.Add(control); control.MouseDoubleClick += AudiobookControl_MouseDoubleClick; control.ContextMenu = (ContextMenu)this.Resources["Audiobook_Context_Menu"]; }));
 			audiobooks.Add(e.Audiobook);
 			Running_Threads--;
 		}
@@ -122,7 +123,10 @@ namespace AudiobookPlayer
 		void DeselectCurrentAudiobook()
 		{
 			if (current_audiobook != null)
+			{
 				current_audiobook.Stop();
+				cmdPlay.IsChecked = false;
+			}
 
 			if (audiobook_update_timer != null)
 				audiobook_update_timer.IsEnabled = false;
@@ -146,8 +150,22 @@ namespace AudiobookPlayer
 		{
 			if (current_audiobook != null)
 			{
-				current_audiobook.Play();
-				StartAudiobookUpdateTimer();
+				if (current_audiobook.IsPlaying)
+				{
+					current_audiobook.Stop();
+					StopAudiobookUpdateTimer();
+				}
+				else
+				{
+					current_audiobook.Play();
+					StartAudiobookUpdateTimer();
+				}
+			}
+			else
+			{
+				// in case the button was clicked the ui changes it's state to checked so we have to cancel that
+				if (cmdPlay.IsChecked == true)
+					cmdPlay.IsChecked = false;
 			}
 		}
 
@@ -164,7 +182,6 @@ namespace AudiobookPlayer
 			image_brush.ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri("res/MD-pause.png", UriKind.Relative));
 			cmdPlay.Background = image_brush;
 		}
-
 
 		private int Running_Threads
 		{ 
@@ -267,16 +284,47 @@ namespace AudiobookPlayer
 			}
 		}
 
-		private void cmdSave_Click(object sender, RoutedEventArgs e)
+		private void cmdMicroPlayer_Click(object sender, RoutedEventArgs e)
 		{
-			//ImageSelector selector = new ImageSelector(images);
-			//selector.ShowDialog();
-			//if(selector.DialogResult.HasValue && selector.DialogResult.Value)
-			//{
-			//
-			//}
+			// remember that the state of the checked property is changed before this method is called!
+			if (cmdMicroPlayer.IsChecked == true)
+				CollapsePlayer();
+			else
+				EnlargePlayer();
+		}
+
+		private void CollapsePlayer()
+		{
+			svAudiobooks.Visibility = System.Windows.Visibility.Collapsed;
+			window_size = new Size(this.Width, this.Height);
+			if (Utilities.DwmIsCompositionEnabled())
+			{
+				this.MinHeight = 70;
+				this.MaxHeight = 70;
+				this.MinWidth = 585;
+				this.MaxWidth = 585;
+			}
+			else
+			{
+				this.MinHeight = 59;
+				this.MaxHeight = 59;
+				this.MinWidth = 585;
+				this.MaxWidth = 585;
+			}
+		}
+
+		private void EnlargePlayer()
+		{
+			svAudiobooks.Visibility = System.Windows.Visibility.Visible;
+			this.MinHeight = 485;
+			this.MaxHeight = 485;
+			this.MinWidth = 585;
+			this.MaxWidth = Int32.MaxValue;
+			//Application.Current.MainWindow.Width = window_size.Width;
+			this.Width = window_size.Width;
 		}
 		#endregion
+
 
 	}
 

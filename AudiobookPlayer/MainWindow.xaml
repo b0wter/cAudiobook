@@ -2,8 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:AudiobookPlayer" x:Class="AudiobookPlayer.MainWindow"
-        Title="MainWindow" Height="527" Width="771" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Closing="Window_Closing"
-		MinWidth="630" MinHeight="485" MaxHeight="485">
+        Title="MainWindow" Height="527" Width="827" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Closing="Window_Closing"
+		MinWidth="630" MinHeight="485" MaxHeight="485"
+		Icon="res/audiobook.png">
 	<Window.Resources>
 		<Storyboard x:Name="Rotate_Refresh_Animation" x:Key="Rotate_Refresh_Animation">
 			<DoubleAnimation Storyboard.TargetName="AnimatedRotateTransform" 
@@ -14,9 +15,19 @@
                                                 FillBehavior="Stop"
 												RepeatBehavior="Forever"/>
 		</Storyboard>
+		<ContextMenu x:Key="Audiobook_Context_Menu">
+			<ContextMenu.ItemsSource>
+				<CompositeCollection>
+					<MenuItem Header="Select" />
+					<MenuItem Header="Search cover" />
+					<Separator />
+					<MenuItem Header="Delete" />
+				</CompositeCollection>
+			</ContextMenu.ItemsSource>
+		</ContextMenu>
 	</Window.Resources>
 	<DockPanel LastChildFill="True">
-		<ToolBarTray DockPanel.Dock="Top" Height="32" HorizontalAlignment="Stretch">
+		<ToolBarTray DockPanel.Dock="Top" HorizontalAlignment="Stretch">
 			<ToolBar Height="32" Name="wursti">
 				<Button Name="cmdBigSkipBackward" Click="cmdBigSkipBackward_Click">
 					<Image Source="res/MD-fast-backward-alt.png" />
@@ -24,12 +35,12 @@
 				<Button Name="cmdSmallSkipBackward" Click="cmdSmallSkipBackward_Click">
 					<Image Source="res/MD-previous.png" />
 				</Button>
-				<Button Name="cmdPlay" Click="cmdPlay_Click">
+				<ToggleButton Name="cmdPlay" Click="cmdPlay_Click">
 					<Image Source="res/MD-play.png" />
-				</Button>
-				<Button Name="cmdPause" Click="cmdPause_Click">
+				</ToggleButton>
+				<!--<Button Name="cmdPause" Click="cmdPause_Click">
 					<Image Source="res/MD-pause.png"/>
-				</Button>
+				</Button>-->
 				<Button Name="cmdSmallSkipForward" Click="cmdSmallSkipForward_Click">
 					<Image Source="res/MD-next.png" />
 				</Button>
@@ -37,7 +48,7 @@
 					<Image Source="res/MD-fast-forward-alt.png" RenderTransformOrigin=".5,.5"/>
 				</Button>
 				<Separator />
-				<Button Name="cmdRefresh" Click="RefreshAudiobooks_Click">
+				<Button Name="cmdRefresh" Click="RefreshAudiobooks_Click" ToolTip="Scans the audiobook folder for new items.">
 					<Image Source="res/arrow-circular-alt-1.png" RenderTransformOrigin=".5,.5">
 						<Image.RenderTransform>
 							<RotateTransform x:Name="AnimatedRotateTransform" Angle="0" />
@@ -49,22 +60,19 @@
 					</Image.Triggers>-->
 					</Image>
 				</Button>
-			</ToolBar>
-			<ToolBar Height="32">
-				<Label Name="lblNowPlayingTitle" Content="Hörbuch: " />
-				<TextBox Name="txtNowPlayingTitle" Text="" IsReadOnly="True" Width="220" Margin="3,0" />
-				<Grid>
-					<ProgressBar Name="pbNowPlayingProgress" Width="200" Maximum="1" Height="20" />
-					<Label Name="lblProgress" HorizontalAlignment="Center"/>
-				</Grid>
-			</ToolBar>
-			<ToolBar Height="32">
-				<Button Name="cmdSettingsDialog" Click="cmdSettingsDialog_Click" >	
+				<Button Name="cmdSettingsDialog" Click="cmdSettingsDialog_Click" ToolTip="Opens the settings dialog." >
 					<Image Source="res/settings.png" />
 				</Button>
-				<Button Name="cmdSave" Click="cmdSave_Click">
-					<Image Source="res/save.png"/>
-				</Button>
+				<Separator />
+				<ToggleButton Name="cmdMicroPlayer" Click="cmdMicroPlayer_Click" ToolTip="Shrinks the Player">
+					<Image Source="res/arrow-1-forward_0.png" />
+				</ToggleButton>
+			</ToolBar>
+			<ToolBar Height="32">
+				<Grid>
+					<ProgressBar Name="pbNowPlayingProgress" Width="300" Maximum="1" Height="20" />
+					<Label Name="lblProgress" HorizontalAlignment="Center" Content=""/>
+				</Grid>
 			</ToolBar>
 		</ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom" Name="sbStatus" Height="32">

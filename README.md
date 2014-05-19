@@ -11,13 +11,20 @@ Working
 -------
 * Continiouos playback over multiple files.
 * Reading audiobooks and automatically fetching cover art from the web.
+* Mini player window
 
 To Do
 -----
-* Control to pause playback.
 * Implement settings dialog (settings can currently be modified by editing a settings file).
 * Sleep timer.
 * A more accurate monitoring of the position in the current audio file.
 * Cover art selection dialog.
 * Read cover art from folder.
 * If the audio path is given relative and then changed to another path the state files contain wrong paths -> use absolute pathes only as workaround
+* Implement the mini player in a more wpf-like way
+
+Changelog
+---------
+* New application icon
+* Mini player
+* Better playback controls

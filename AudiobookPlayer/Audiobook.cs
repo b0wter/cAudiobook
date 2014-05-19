@@ -264,7 +264,7 @@ namespace AudiobookPlayer
 				KeyValuePair<string, double> pair;
 				pair = AbsolutePositionToFileAndPosition(value);
 				current_file = pair;
-				if (audioPlayer != null)
+				if (audioPlayer != null && isPlaying)
 				{
 					audioPlayer.Stop();
 					audioPlayer.Play(pair.Key, pair.Value);
