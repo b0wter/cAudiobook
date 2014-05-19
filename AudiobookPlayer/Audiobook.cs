@@ -197,7 +197,6 @@ namespace AudiobookPlayer
 			{
 				audioPlayer.Pause();
 				isPlaying = false;
-				//TODO: Zeitpunkt abspeichern
 			}
 		}
 

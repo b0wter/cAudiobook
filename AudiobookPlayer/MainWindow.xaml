@@ -17,7 +17,7 @@
 	</Window.Resources>
 	<DockPanel LastChildFill="True">
 		<ToolBarTray DockPanel.Dock="Top" Height="32" HorizontalAlignment="Stretch">
-			<ToolBar Height="32">
+			<ToolBar Height="32" Name="wursti">
 				<Button Name="cmdBigSkipBackward" Click="cmdBigSkipBackward_Click">
 					<Image Source="res/MD-fast-backward-alt.png" />
 				</Button>
@@ -26,6 +26,9 @@
 				</Button>
 				<Button Name="cmdPlay" Click="cmdPlay_Click">
 					<Image Source="res/MD-play.png" />
+				</Button>
+				<Button Name="cmdPause" Click="cmdPause_Click">
+					<Image Source="res/MD-pause.png"/>
 				</Button>
 				<Button Name="cmdSmallSkipForward" Click="cmdSmallSkipForward_Click">
 					<Image Source="res/MD-next.png" />

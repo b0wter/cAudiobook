@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.ComponentModel;
@@ -157,6 +158,14 @@ namespace AudiobookPlayer
 			StopAudiobookUpdateTimer();
 		}
 
+		private void ChangePlayToPauseButton()
+		{
+			var image_brush = new System.Windows.Media.ImageBrush();
+			image_brush.ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri("res/MD-pause.png", UriKind.Relative));
+			cmdPlay.Background = image_brush;
+		}
+
+
 		private int Running_Threads
 		{ 
 			get { return running_threads; }
@@ -209,6 +218,11 @@ namespace AudiobookPlayer
 		private void cmdPlay_Click(object sender, RoutedEventArgs e)
 		{
 			Audiobook_Play();
+		}
+
+		private void cmdPause_Click(object sender, RoutedEventArgs e)
+		{
+			Audiobook_Stop();
 		}
 
 		void AudiobookControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)

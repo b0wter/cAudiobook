@@ -20,3 +20,4 @@ To Do
 * A more accurate monitoring of the position in the current audio file.
 * Cover art selection dialog.
 * Read cover art from folder.
+* If the audio path is given relative and then changed to another path the state files contain wrong paths -> use absolute pathes only as workaround
