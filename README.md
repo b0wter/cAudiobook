@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/b0wter/cAudiobook/master/AudiobookPlayer/res/audiobook.png =250x)cAudiobook
+![logo](https://raw.githubusercontent.com/b0wter/cAudiobook/master/AudiobookPlayer/res/audiobook_small.png)cAudiobook
 ==========
 Windows-based open source audiobook player for drm-free audiobooks. In its current status the app is useable but missing some features, see To-Do-list.
 To use it place your audiobooks in a folder and set it in the applications configuration file. Every folder in the audiobook folder is treated as a seperate audiobook. Folders are scanned recursively so that an audiobook may consist of several sub-folders.
