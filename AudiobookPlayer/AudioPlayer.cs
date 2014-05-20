@@ -28,7 +28,6 @@ namespace AudiobookPlayer
 		string current_file = "";
 
 		public delegate void PlaybackEventHandler(object source, PlaybackEventArgs e);
-		public event PlaybackEventHandler OnError;
 		public event PlaybackEventHandler OnFinished;
 
 		public AudioPlayer()

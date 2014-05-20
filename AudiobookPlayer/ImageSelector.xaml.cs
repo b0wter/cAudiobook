@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace AudiobookPlayer
 {
@@ -20,22 +21,41 @@ namespace AudiobookPlayer
 	/// </summary>
 	public partial class ImageSelector : Window
 	{
+		private System.Drawing.Image selected_image = null;
+		private List<System.Drawing.Image> images = null;
 
-
-		private ImageSource selected_image = null;
-
-		public ImageSelector(System.Drawing.Image image)
+		/// <summary>
+		/// Creates a new instance of the ImageSelector that will perform it's own search.
+		/// </summary>
+		/// <param name="book">Book that will be searched for</param>
+		/// <param name="no_of_results">Number of results that the user will be presented.</param>
+		public ImageSelector(Audiobook book, int no_of_results = 8)
 		{
 			InitializeComponent();
-			List<System.Drawing.Image> images = new List<System.Drawing.Image>();
-			images.Add(image);
-			ShowImages(images);
+			SearchImages(book.Name, no_of_results);
 		}
 
+		/// <summary>
+		/// Creates a new instance of the ImageSelector that will give the user a choice of predefined images.
+		/// </summary>
+		/// <param name="images"></param>
 		public ImageSelector(IEnumerable<System.Drawing.Image> images)
 		{
 			InitializeComponent();
 			ShowImages(images);
+		}
+
+		private void SearchImages(string name, int no_of_results)
+		{
+			ImageSearch image_search = new ImageSearch(name, no_of_results, no_of_results * 4);
+			image_search.OnFinished += image_search_OnFinished;
+			ThreadPool.QueueUserWorkItem(image_search.Start);
+		}
+
+		void image_search_OnFinished(object source, ImageSearchEventArgs e)
+		{
+			images = e.Results;
+			Dispatcher.Invoke(new Action(() => { ShowImages(e.Results); }));
 		}
 		
 		private void ShowImages(IEnumerable<System.Drawing.Image> images)
@@ -46,6 +66,7 @@ namespace AudiobookPlayer
 				var image_control = CreateImageControl(bitmap_source);
 				wpImages.Children.Add(image_control);
 			}
+			imgWaiting.Visibility = System.Windows.Visibility.Collapsed;
 		}
 
 		private Image CreateImageControl(BitmapSource image)
@@ -61,22 +82,12 @@ namespace AudiobookPlayer
 		{
 			if(e.ClickCount >= 2)
 			{
-				selected_image = ((Image)sender).Source;
+				selected_image = images[wpImages.Children.IndexOf((UIElement)sender)];
 				DialogResult = true;
 			}
 		}
 
-		//private BitmapSource BitmapSourceFromImage(System.Drawing.Image image)
-		//{
-		//	var bitmap = new System.Drawing.Bitmap(image);
-		//	IntPtr bmpPtr = bitmap.GetHbitmap();
-		//	BitmapSource bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bmpPtr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-		//	bitmapSource.Freeze();
-		//	DeleteObject(bmpPtr);
-		//	return bitmapSource;
-		//}
-
-		public ImageSource SelectedImage
+		public System.Drawing.Image SelectedImage
 		{ get { return selected_image; } }
 	}
 }

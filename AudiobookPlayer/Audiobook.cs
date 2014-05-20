@@ -282,7 +282,17 @@ namespace AudiobookPlayer
 		{ get { return new TimeSpan(0, 0, (int)length); } }
 
 		public System.Drawing.Image Cover
-		{ get { return image; } }
+		{
+			get { return image; } 
+			set
+			{
+				this.image = value;
+				var list = new List<System.Drawing.Image>();
+				list.Add(value);
+				ImageSearchEventArgs args = new ImageSearchEventArgs(list);
+				OnCoverSearchFinished(this, args);
+			}
+		}
 
 		public bool IsPlaying
 		{ get { return isPlaying; } }

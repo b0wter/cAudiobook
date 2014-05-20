@@ -21,7 +21,6 @@ namespace AudiobookPlayer
 	public partial class AudiobookControl : UserControl
 	{
 		public delegate void FadeOutHandler(object sender, EventArgs e);
-		public event FadeOutHandler OnFadeOut;
 
 		Audiobook audiobook;
 

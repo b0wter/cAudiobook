@@ -17,12 +17,10 @@ namespace AudiobookPlayer
         public delegate void AudiobookEventHandler(object source, AudioBookArgs e);
 
 		volatile int running_threads = 0;
-		//Storyboard rotateRefreshButtonStoryboard;
 		volatile List<Audiobook> audiobooks = new List<Audiobook>();
 		Audiobook current_audiobook;
 		System.Windows.Threading.DispatcherTimer audiobook_update_timer;
 		Config config = new Config();
-		List<System.Drawing.Image> images;
 		Size window_size;
 
 		public MainWindow()
@@ -30,15 +28,6 @@ namespace AudiobookPlayer
 			InitializeComponent();
 			ThreadPool.SetMaxThreads(config.NoOfThreads, config.NoOfThreads);
             ReadAudiobookFolder();
-			ImageSearch search = new ImageSearch("Der Zeitdieb", 5);
-			search.OnFinished += search_OnFinished;
-			ThreadPool.QueueUserWorkItem(search.Start);
-		}
-
-		void search_OnFinished(object source, ImageSearchEventArgs e)
-		{
-			//ImageSelector image_selector = new ImageSelector(e.Results);
-			images = e.Results;
 		}
 
         void ReadAudiobookFolder()
@@ -176,13 +165,6 @@ namespace AudiobookPlayer
 			StopAudiobookUpdateTimer();
 		}
 
-		private void ChangePlayToPauseButton()
-		{
-			var image_brush = new System.Windows.Media.ImageBrush();
-			image_brush.ImageSource = new System.Windows.Media.Imaging.BitmapImage(new Uri("res/MD-pause.png", UriKind.Relative));
-			cmdPlay.Background = image_brush;
-		}
-
 		private int Running_Threads
 		{ 
 			get { return running_threads; }
@@ -219,6 +201,46 @@ namespace AudiobookPlayer
 				current_audiobook.Position += seconds;
 				UpdateAudiobookControls();
 			}
+		}
+
+		private void CollapsePlayer()
+		{
+			svAudiobooks.Visibility = System.Windows.Visibility.Collapsed;
+			window_size = new Size(this.Width, this.Height);
+			if (Utilities.DwmIsCompositionEnabled())
+			{
+				this.MinHeight = 70;
+				this.MaxHeight = 70;
+				this.MinWidth = 585;
+				this.MaxWidth = 585;
+			}
+			else
+			{
+				this.MinHeight = 59;
+				this.MaxHeight = 59;
+				this.MinWidth = 585;
+				this.MaxWidth = 585;
+			}
+		}
+
+		private void EnlargePlayer()
+		{
+			svAudiobooks.Visibility = System.Windows.Visibility.Visible;
+			this.MinHeight = 485;
+			this.MaxHeight = 485;
+			this.MinWidth = 585;
+			this.MaxWidth = Int32.MaxValue;
+			//Application.Current.MainWindow.Width = window_size.Width;
+			this.Width = window_size.Width;
+		}
+
+		private void SelectCover(Audiobook book)
+		{
+			var selector = new ImageSelector(book);
+			selector.ShowDialog();
+
+			if (selector.DialogResult.HasValue && selector.DialogResult.Value && selector.SelectedImage != null)
+				book.Cover = selector.SelectedImage;
 		}
 
 		#region Control Events
@@ -293,39 +315,33 @@ namespace AudiobookPlayer
 				EnlargePlayer();
 		}
 
-		private void CollapsePlayer()
+		private void cmSelectAudiobook_Click(object sender, RoutedEventArgs e)
 		{
-			svAudiobooks.Visibility = System.Windows.Visibility.Collapsed;
-			window_size = new Size(this.Width, this.Height);
-			if (Utilities.DwmIsCompositionEnabled())
-			{
-				this.MinHeight = 70;
-				this.MaxHeight = 70;
-				this.MinWidth = 585;
-				this.MaxWidth = 585;
-			}
-			else
-			{
-				this.MinHeight = 59;
-				this.MaxHeight = 59;
-				this.MinWidth = 585;
-				this.MaxWidth = 585;
-			}
+			var control = GetAudiobookControlFromContextMenuClick(sender);
+			SelectAudiobook(control.Audiobook);
 		}
 
-		private void EnlargePlayer()
+		private void cmSearchAudiobookCover_Click(object sender, RoutedEventArgs e)
 		{
-			svAudiobooks.Visibility = System.Windows.Visibility.Visible;
-			this.MinHeight = 485;
-			this.MaxHeight = 485;
-			this.MinWidth = 585;
-			this.MaxWidth = Int32.MaxValue;
-			//Application.Current.MainWindow.Width = window_size.Width;
-			this.Width = window_size.Width;
+			var control = GetAudiobookControlFromContextMenuClick(sender);
+			SelectCover(control.Audiobook);
 		}
+
+		private AudiobookControl GetAudiobookControlFromContextMenuClick(object sender)
+		{
+			MenuItem menu_item = sender as MenuItem;
+			if (menu_item != null)
+			{
+				ContextMenu context_menu = menu_item.CommandParameter as ContextMenu;
+				if (context_menu != null)
+				{
+					return context_menu.PlacementTarget as AudiobookControl;
+				}
+			}
+			return null;
+		}
+
 		#endregion
-
-
 	}
 
 	class AudiobookScan

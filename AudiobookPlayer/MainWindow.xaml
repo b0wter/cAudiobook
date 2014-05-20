@@ -16,14 +16,14 @@
 												RepeatBehavior="Forever"/>
 		</Storyboard>
 		<ContextMenu x:Key="Audiobook_Context_Menu">
-			<ContextMenu.ItemsSource>
-				<CompositeCollection>
-					<MenuItem Header="Select" />
-					<MenuItem Header="Search cover" />
+			<!--<ContextMenu.ItemsSource>
+				<CompositeCollection>-->
+					<MenuItem Name="cmSelectAudiobook" Header="Select" Click="cmSelectAudiobook_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+					<MenuItem Name="cmSearchAudiobookCover" Header="Search cover" Click="cmSearchAudiobookCover_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
 					<Separator />
 					<MenuItem Header="Delete" />
-				</CompositeCollection>
-			</ContextMenu.ItemsSource>
+				<!--</CompositeCollection>
+			</ContextMenu.ItemsSource> -->
 		</ContextMenu>
 	</Window.Resources>
 	<DockPanel LastChildFill="True">
@@ -70,7 +70,7 @@
 			</ToolBar>
 			<ToolBar Height="32">
 				<Grid>
-					<ProgressBar Name="pbNowPlayingProgress" Width="300" Maximum="1" Height="20" />
+					<ProgressBar Name="pbNowPlayingProgress" Width="300" Maximum="1" Height="20" Foreground="#FF6A8EC5" />
 					<Label Name="lblProgress" HorizontalAlignment="Center" Content=""/>
 				</Grid>
 			</ToolBar>

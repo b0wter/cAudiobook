@@ -58,5 +58,18 @@ namespace AudiobookPlayer
 
 		[DllImport("dwmapi.dll", PreserveSig = false)]
 		public static extern bool DwmIsCompositionEnabled();
+
+		public static System.Drawing.Bitmap BitmapFromSource(BitmapSource bitmap_source)
+		{
+			System.Drawing.Bitmap bitmap;
+			using(MemoryStream out_stream = new MemoryStream())
+			{
+				BitmapEncoder encoder = new BmpBitmapEncoder();
+				encoder.Frames.Add(BitmapFrame.Create(bitmap_source));
+				encoder.Save(out_stream);
+				bitmap = new System.Drawing.Bitmap(out_stream);
+			}
+			return bitmap;
+		}
 	}
 }

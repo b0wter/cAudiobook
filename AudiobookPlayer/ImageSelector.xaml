@@ -1,10 +1,38 @@
 ﻿<Window x:Class="AudiobookPlayer.ImageSelector"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ImageSelector" Height="449" Width="568">
+        Title="ImageSelector" Height="449" Width="568"
+		Icon="res/audiobook.png">
 	<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Name="svImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-		<WrapPanel Name="wpImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+		<Grid>
+			<WrapPanel Name="wpImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
 
-		</WrapPanel>
+			</WrapPanel>
+			<Image Name="imgWaiting" Source="res/arrow-circular-alt-1.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+				<Image.RenderTransform>
+					<RotateTransform/>
+				</Image.RenderTransform>
+				<Image.Style>
+					<Style>
+						<Style.Triggers>
+							<Trigger Property="Image.IsEnabled" Value="True">
+								<Trigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation
+												Storyboard.TargetProperty="RenderTransform.Angle"
+												From="0"
+												To="360"
+												Duration="0:0:2"
+												RepeatBehavior="Forever" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.EnterActions>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</Image.Style>
+			</Image>
+		</Grid>
 	</ScrollViewer>
 </Window>
