@@ -1,15 +1,17 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.ComponentModel;
 
 namespace AudiobookPlayer
 {
 	//TODO: Klasse noch einmal hübscher machen. Das Auslesen der Werte ist so nicht sehr elegant und kann Fehler nach sich ziehen, siehe entsprechenden Kommentar.
 	//
-	public class Config
+	public class Config : IDataErrorInfo, INotifyPropertyChanged
 	{
 		const string UPDATE_INTERVALL_IDENT = "update_intervall_seconds";
 		const string SMALL_SKIP_SECONDS_IDENT = "small_skip_seconds";
@@ -81,10 +83,56 @@ namespace AudiobookPlayer
 			return default(T);
 		}
 
+		#region INotifyPropertyChanged Members
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			if (this.PropertyChanged != null)
+				this.PropertyChanged(this, e);
+		}
+		#endregion
+
+		#region IDataErrorInfo Members
+		public string Error
+		{ get { return this[null]; } }
+
+		public string this[string property_name]
+		{
+			get
+			{
+				string result = string.Empty;
+				property_name = property_name ?? string.Empty;
+				if(property_name == string.Empty || property_name == "AudiobookPath")
+				{
+					if(string.IsNullOrEmpty(this.AudiobookPath))
+					{
+						result += "Audiobook path cannot be empty." + Environment.NewLine;
+					}
+				}
+
+				if(property_name == string.Empty || property_name == "AudiobookUpdateIntervall")
+				{
+					if(AudiobookUpdateIntervall < 1)
+					{
+						result += "Audiobook update intervall cannot be less than one." + Environment.NewLine;
+					}
+				}
+
+				return result.TrimEnd();
+			}
+		}
+		#endregion
+
+		#region Properties
 		public double AudiobookUpdateIntervall
 		{
 			get { return audiobook_update_intervall; }
-			set { audiobook_update_intervall = value; }
+			set 
+			{ 
+				audiobook_update_intervall = value;
+				this.OnPropertyChanged(new PropertyChangedEventArgs("AudiobookUpdateIntervall"));
+			}
 		}
 
 		public double SmallSkipSeconds
@@ -108,7 +156,14 @@ namespace AudiobookPlayer
 		public string AudiobookPath
 		{
 			get { return audiobook_path; }
-			set { audiobook_path = value; }
+			set 
+			{
+				if (Directory.Exists(value))
+					audiobook_path = value;
+				else
+					throw new ApplicationException("Audiobook path does not point to an existing directory.");
+			}
 		}
+		#endregion
 	}
 }

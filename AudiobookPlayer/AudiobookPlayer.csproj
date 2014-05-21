@@ -100,7 +100,7 @@
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SortExtensions.cs" />
-    <Compile Include="ThreadRangeRule.cs" />
+    <Compile Include="IntRangeValidationRule.cs" />
     <Compile Include="Utilities.cs" />
     <Page Include="AudiobookControl.xaml">
       <SubType>Designer</SubType>

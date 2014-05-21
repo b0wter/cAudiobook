@@ -38,26 +38,26 @@
 		<Label Height="26" Grid.Row="2" Grid.Column="0" Content="Large skip (seconds)" />
 		<Label Height="26" Grid.Row="3" Grid.Column="0" Content="Update intervall (seconds)" />
 		<Label Height="26" Grid.Row="4" Grid.Column="0" Content="Background Threads" />
-		<TextBox Height="24" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" Name="txtAudiobookPath" Validation.ErrorTemplate="{StaticResource validationTemplate}" />
-		<TextBox Height="24" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2" Name="txtSmallSkipSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
-		<TextBox Height="24" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2" Name="txtLargeSkipSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
-		<TextBox Height="24" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Name="txtUpdateIntervallSeconds" Validation.ErrorTemplate="{StaticResource validationTemplate}"/>
-		<TextBox Height="24" Grid.Row="4" Grid.Column="1" Margin="2,2,2,2" Name="txtBackgroundThreads" Validation.ErrorTemplate="{StaticResource validationTemplate}">
+		<TextBox Height="24" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2" Name="txtAudiobookPath">
 			<TextBox.Text>
-				<Binding ElementName="This" Path="BackgroundThreads" UpdateSourceTrigger="PropertyChanged">
+				<Binding Path="AudiobookPath">
 					<Binding.ValidationRules>
-						<local:ThreadRangeRule />
+						<ExceptionValidationRule />
 					</Binding.ValidationRules>
 				</Binding>
 			</TextBox.Text>
 		</TextBox>
+		<TextBox Height="24" Grid.Row="1" Grid.Column="1" Margin="2,2,2,2" Name="txtSmallSkipSeconds"/>
+		<TextBox Height="24" Grid.Row="2" Grid.Column="1" Margin="2,2,2,2" Name="txtLargeSkipSeconds" />
+		<TextBox Height="24" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Name="txtUpdateIntervallSeconds" />
+		<TextBox Height="24" Grid.Row="4" Grid.Column="1" Margin="2,2,2,2" Name="txtBackgroundThreads" />
 		<Grid Grid.Row="5" Grid.Column="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Button Grid.Row="5" Grid.Column="0" Content="Ok" Margin="2,2,2,2"/>
-			<Button Grid.Row="5" Grid.Column="1" Content="Abort" Margin="2,2,2,2"/>
+			<Button Name="cmdOk" Grid.Row="5" Grid.Column="0" Content="Ok" Margin="2,2,2,2" Click="cmdOk_Click"/>
+			<Button Name="cmdAbort" Grid.Row="5" Grid.Column="1" Content="Abort" Margin="2,2,2,2"/>
 		</Grid>
 	</Grid>
 </Window>

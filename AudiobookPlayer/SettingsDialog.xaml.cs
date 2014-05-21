@@ -26,22 +26,39 @@ namespace AudiobookPlayer
 		{
 			InitializeComponent();
 			config = current_config;
+			this.DataContext = config;
 			SetupControls();
 		}
 
 		private void SetupControls()
 		{
-			txtAudiobookPath.Text = config.AudiobookPath;
-			txtBackgroundThreads.Text = config.NoOfThreads.ToString();
-			txtLargeSkipSeconds.Text = config.LargeSkipSeconds.ToString();
-			txtSmallSkipSeconds.Text = config.SmallSkipSeconds.ToString();
-			txtUpdateIntervallSeconds.Text = config.AudiobookUpdateIntervall.ToString();
+			//txtAudiobookPath.Text = config.AudiobookPath;
+			//txtBackgroundThreads.Text = config.NoOfThreads.ToString();
+			//txtLargeSkipSeconds.Text = config.LargeSkipSeconds.ToString();
+			//txtSmallSkipSeconds.Text = config.SmallSkipSeconds.ToString();
+			//txtUpdateIntervallSeconds.Text = config.AudiobookUpdateIntervall.ToString();
 		}
 
-		public int BackgroundThreads
+		private bool ValidateTextFields()
 		{
-			get { return (int)GetValue(BackgroundThreadsProperty); }
-			set { SetValue(BackgroundThreadsProperty, value); }
+			bool has_errors = false;
+			has_errors = has_errors && Validation.GetHasError(txtAudiobookPath);
+			has_errors = has_errors && Validation.GetHasError(txtSmallSkipSeconds);
+			has_errors = has_errors && Validation.GetHasError(txtLargeSkipSeconds);
+			has_errors = has_errors && Validation.GetHasError(txtUpdateIntervallSeconds);
+			has_errors = has_errors && Validation.GetHasError(txtBackgroundThreads);
+			return has_errors;
+		}
+
+		private void cmdOk_Click(object sender, RoutedEventArgs e)
+		{
+			if (ValidateTextFields())
+			{
+				MessageBox.Show("At least one text fields contains errors.");
+				return;
+			}
+			else
+				DialogResult = true;
 		}
 	}
 
