@@ -9,9 +9,7 @@ using System.ComponentModel;
 
 namespace AudiobookPlayer
 {
-	//TODO: Klasse noch einmal hübscher machen. Das Auslesen der Werte ist so nicht sehr elegant und kann Fehler nach sich ziehen, siehe entsprechenden Kommentar.
-	//
-	public class Config //: IDataErrorInfo, INotifyPropertyChanged
+	public class Config 
 	{
 		const string UPDATE_INTERVALL_IDENT = "update_intervall_seconds";
 		const string SMALL_SKIP_SECONDS_IDENT = "small_skip_seconds";
