@@ -13,10 +13,11 @@ Working
 * Reading audiobooks and automatically fetching cover art from the web.
 * Mini player window
 * Cover art selection dialog.
+* Settings dialog. (one caveat: if invalid input is given the user can still click ok but no changes will be saved)
 
 To Do
 -----
-* Implement settings dialog (settings can currently be modified by editing a settings file).
+* Smooth validation of settings dialog
 * Sleep timer.
 * A more accurate monitoring of the position in the current audio file.
 * Read cover art from folder.
@@ -26,6 +27,9 @@ To Do
 
 Changelog
 ---------
+* Settings dialog is now useable
+* Select covers for your audiobooks by right-clicking the audiobooks
+
 * New application icon
 * Mini player
 * Better playback controls
