@@ -96,12 +96,14 @@
     <Compile Include="ImageSelector.xaml.cs">
       <DependentUpon>ImageSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValidationRules\IntRangeValidationRule.cs" />
     <Compile Include="SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SortExtensions.cs" />
-    <Compile Include="IntRangeValidationRule.cs" />
+    <Compile Include="ValidationRules\DoubleRangeValidationRule.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="ValidationRules\PathValidationRule.cs" />
     <Page Include="AudiobookControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

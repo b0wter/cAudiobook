@@ -31,12 +31,20 @@ namespace AudiobookPlayer
 			ReadConfigValues();
 		}
 
-		~Config()
+		/// <summary>
+		/// Creates a copy of the class.
+		/// </summary>
+		/// <param name="config">Class instance that will be cloned.</param>
+		public Config(Config config)
 		{
-			SaveConfig();
+			this.AudiobookPath = config.AudiobookPath;
+			this.AudiobookUpdateIntervall = config.AudiobookUpdateIntervall;
+			this.LargeSkipSeconds = config.LargeSkipSeconds;
+			this.NoOfThreads = config.NoOfThreads;
+			this.SmallSkipSeconds = config.SmallSkipSeconds;
 		}
 
-		private void SaveConfig()
+		public void SaveConfig()
 		{
 			ConfigurationManager.AppSettings[UPDATE_INTERVALL_IDENT] = audiobook_update_intervall.ToString();
 			ConfigurationManager.AppSettings[SMALL_SKIP_SECONDS_IDENT] = small_skip_seconds.ToString();
@@ -132,6 +140,20 @@ namespace AudiobookPlayer
 			{ 
 				audiobook_update_intervall = value;
 				this.OnPropertyChanged(new PropertyChangedEventArgs("AudiobookUpdateIntervall"));
+			}
+		}
+
+		public string AudiobookUpdateIntervallAsString
+		{
+			get { return audiobook_update_intervall.ToString(); }
+			set 
+			{ 
+				double new_value = -1.0;
+				if(!double.TryParse(value, out new_value))
+				{
+					throw new ApplicationException("Cannot convert string to double.");
+				}
+				AudiobookUpdateIntervall = new_value;
 			}
 		}
 

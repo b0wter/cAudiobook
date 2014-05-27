@@ -27,16 +27,6 @@ namespace AudiobookPlayer
 			InitializeComponent();
 			config = current_config;
 			this.DataContext = config;
-			SetupControls();
-		}
-
-		private void SetupControls()
-		{
-			//txtAudiobookPath.Text = config.AudiobookPath;
-			//txtBackgroundThreads.Text = config.NoOfThreads.ToString();
-			//txtLargeSkipSeconds.Text = config.LargeSkipSeconds.ToString();
-			//txtSmallSkipSeconds.Text = config.SmallSkipSeconds.ToString();
-			//txtUpdateIntervallSeconds.Text = config.AudiobookUpdateIntervall.ToString();
 		}
 
 		private bool ValidateTextFields()
@@ -60,6 +50,14 @@ namespace AudiobookPlayer
 			else
 				DialogResult = true;
 		}
+
+		private void cmdAbort_Click(object sender, RoutedEventArgs e)
+		{
+			this.DialogResult = false;
+		}
+
+		public Config Config
+		{ get { return config; } }
 	}
 
 

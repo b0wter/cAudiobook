@@ -192,6 +192,7 @@ namespace AudiobookPlayer
 		{
 			foreach (Audiobook book in audiobooks)
 				book.Serialize();
+			config.SaveConfig();
 		}
 
 		private void Skip(double seconds)
@@ -298,11 +299,11 @@ namespace AudiobookPlayer
 
 		private void cmdSettingsDialog_Click(object sender, RoutedEventArgs e)
 		{
-			SettingsDialog dialog = new SettingsDialog(config);
+			SettingsDialog dialog = new SettingsDialog(new Config(config));
 			dialog.ShowDialog();
 			if(dialog.DialogResult.HasValue && dialog.DialogResult.Value)
 			{
-
+				this.config = dialog.Config;
 			}
 		}
 
