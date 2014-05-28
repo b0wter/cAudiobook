@@ -17,16 +17,17 @@ Working
 
 To Do
 -----
-* Smooth validation of settings dialog
 * Sleep timer.
 * A more accurate monitoring of the position in the current audio file.
 * Read cover art from folder.
-* If the audio path is given relative and then changed to another path the state files contain wrong paths -> use absolute pathes only as workaround
+* If the audio path is given relative and then changed to another path the state files contain wrong paths -> use absolute pathes as workaround
 * Implemention of the mini player in a more WPF-like way
 * Target a lower .Net version than 4.5
 
 Changelog
 ---------
+* Validation of settings dialog now fully working
+
 * Settings dialog is now useable
 * Select covers for your audiobooks by right-clicking the audiobooks
 
