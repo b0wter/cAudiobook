@@ -32,11 +32,11 @@ namespace AudiobookPlayer
 		private bool ValidateTextFields()
 		{
 			bool has_errors = false;
-			has_errors = has_errors && Validation.GetHasError(txtAudiobookPath);
-			has_errors = has_errors && Validation.GetHasError(txtSmallSkipSeconds);
-			has_errors = has_errors && Validation.GetHasError(txtLargeSkipSeconds);
-			has_errors = has_errors && Validation.GetHasError(txtUpdateIntervallSeconds);
-			has_errors = has_errors && Validation.GetHasError(txtBackgroundThreads);
+			has_errors = has_errors || Validation.GetHasError(txtAudiobookPath);
+			has_errors = has_errors || Validation.GetHasError(txtSmallSkipSeconds);
+			has_errors = has_errors || Validation.GetHasError(txtLargeSkipSeconds);
+			has_errors = has_errors || Validation.GetHasError(txtUpdateIntervallSeconds);
+			has_errors = has_errors || Validation.GetHasError(txtBackgroundThreads);
 			return has_errors;
 		}
 
