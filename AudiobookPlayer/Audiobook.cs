@@ -21,6 +21,7 @@ namespace AudiobookPlayer
 		string path;
 		SortedList<string, double> files;
 		System.Drawing.Image image = null;
+		List<Bookmark> bookmarks;
 
 		[NonSerialized]
 		KeyValuePair<string, double> current_file;
@@ -34,6 +35,7 @@ namespace AudiobookPlayer
 		#region Constructors / Audiobook Creation Process
 		private Audiobook()
 		{
+			bookmarks = new List<Bookmark>();
 			name = "unnamed";
 			length = 0;
 			position = 0;
@@ -273,7 +275,12 @@ namespace AudiobookPlayer
 		}
 
 		public TimeSpan PositionAsTimeSpan
-		{ get { return new TimeSpan(0, 0, (int)position); } }
+		{ 
+			get 
+			{ return new TimeSpan(0, 0, (int)position); }
+			set
+			{ Position = value.TotalSeconds; }
+		}
 
 		public double Length
 		{ get { return length; } }
@@ -296,6 +303,22 @@ namespace AudiobookPlayer
 
 		public bool IsPlaying
 		{ get { return isPlaying; } }
+
+		public List<Bookmark> Bookmarks
+		{
+			get 
+			{
+				if (bookmarks == null)
+					bookmarks = new List<Bookmark>();
+				return bookmarks; 
+			}
+			set
+			{
+				if (value == null)
+					bookmarks.Clear();
+				bookmarks = value;
+			}
+		}
 		#endregion
 	}
 }

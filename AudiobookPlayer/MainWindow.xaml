@@ -2,9 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:AudiobookPlayer" x:Class="AudiobookPlayer.MainWindow"
-        Title="MainWindow" Height="527" Width="827" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Closing="Window_Closing"
+        Title="Audiobook Player" Height="527" Width="827" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Closing="Window_Closing"
 		MinWidth="630" MinHeight="485" MaxHeight="485"
-		Icon="res/audiobook.png">
+		Icon="res/audiobook.png"
+		KeyUp="Window_KeyUp">
 	<Window.Resources>
 		<Storyboard x:Name="Rotate_Refresh_Animation" x:Key="Rotate_Refresh_Animation">
 			<DoubleAnimation Storyboard.TargetName="AnimatedRotateTransform" 
@@ -16,14 +17,15 @@
 												RepeatBehavior="Forever"/>
 		</Storyboard>
 		<ContextMenu x:Key="Audiobook_Context_Menu">
-			<!--<ContextMenu.ItemsSource>
-				<CompositeCollection>-->
-					<MenuItem Name="cmSelectAudiobook" Header="Select" Click="cmSelectAudiobook_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-					<MenuItem Name="cmSearchAudiobookCover" Header="Search cover" Click="cmSearchAudiobookCover_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
-					<Separator />
-					<MenuItem Header="Delete" />
-				<!--</CompositeCollection>
-			</ContextMenu.ItemsSource> -->
+			<MenuItem Name="cmSelectAudiobook" Header="Select" Click="cmSelectAudiobook_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+			<MenuItem Name="cmSearchAudiobookCover" Header="Search cover" Click="cmSearchAudiobookCover_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}"/>
+			<Separator />
+			<MenuItem Header="Delete" />
+		</ContextMenu>
+		<ContextMenu x:Key="Bookmarks_Context_Menu">
+			<MenuItem Name="cmdRenameBookmark" Header="Rename" Click="cmdRenameBookmark_Click" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
+			<Separator />
+			<MenuItem Name="cmdDeleteBookmark" Header="Delete" Click="cmdDeleteBookmark_Click"  CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent}" />
 		</ContextMenu>
 	</Window.Resources>
 	<DockPanel LastChildFill="True">
@@ -38,14 +40,14 @@
 				<ToggleButton Name="cmdPlay" Click="cmdPlay_Click">
 					<Image Source="res/MD-play.png" />
 				</ToggleButton>
-				<!--<Button Name="cmdPause" Click="cmdPause_Click">
-					<Image Source="res/MD-pause.png"/>
-				</Button>-->
 				<Button Name="cmdSmallSkipForward" Click="cmdSmallSkipForward_Click">
 					<Image Source="res/MD-next.png" />
 				</Button>
 				<Button Click="cmdBigSkipForward_Click" Name="cmdBigSkipForward">
 					<Image Source="res/MD-fast-forward-alt.png" RenderTransformOrigin=".5,.5"/>
+				</Button>
+				<Button Name="cmdGoTo" Click="cmdGoTo_Click" ToolTip="Goto a specific position.">
+					<Image Source="res/arrow-1-forward_0.png" />
 				</Button>
 				<Separator />
 				<Button Name="cmdRefresh" Click="RefreshAudiobooks_Click" ToolTip="Scans the audiobook folder for new items.">
@@ -53,25 +55,23 @@
 						<Image.RenderTransform>
 							<RotateTransform x:Name="AnimatedRotateTransform" Angle="0" />
 						</Image.RenderTransform>
-						<!--						<Image.Triggers>
-						<EventTrigger RoutedEvent="MouseDown">
-							<BeginStoryboard Name="BeginStoryboardRotateRefreshButton" Storyboard="{StaticResource Rotate_Refresh_Animation}" />
-						</EventTrigger>
-					</Image.Triggers>-->
 					</Image>
 				</Button>
 				<Button Name="cmdSettingsDialog" Click="cmdSettingsDialog_Click" ToolTip="Opens the settings dialog." >
 					<Image Source="res/settings.png" />
 				</Button>
 				<Separator />
-				<ToggleButton Name="cmdMicroPlayer" Click="cmdMicroPlayer_Click" ToolTip="Shrinks the Player">
-					<Image Source="res/arrow-1-forward_0.png" />
+				<ToggleButton Name="cmdMicroPlayer" Click="cmdMicroPlayer_Click" ToolTip="Toggles the mini player mode.">
+					<Image Source="res/full-screen-exit_0.png" />
+				</ToggleButton>
+				<ToggleButton Name="cmdSidebar" Click="cmdSidebar_Click" ToolTip="Toggles the sidebar.">
+					<Image Source="res/list.png" />
 				</ToggleButton>
 			</ToolBar>
 			<ToolBar Height="32">
 				<Grid>
-					<ProgressBar Name="pbNowPlayingProgress" Width="300" Maximum="1" Height="20" Foreground="#FF6A8EC5" />
-					<Label Name="lblProgress" HorizontalAlignment="Center" Content=""/>
+					<ProgressBar Name="pbNowPlayingProgress" Width="300" Maximum="1" Height="20" Foreground="#FF6A8EC5" Value="{Binding Path=Progress, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+					<Label Name="lblProgress" HorizontalAlignment="Center" Content="{Binding Path=PositionAsTimeSpan, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
 				</Grid>
 			</ToolBar>
 		</ToolBarTray>
@@ -80,6 +80,53 @@
 			<ProgressBar Name="pbCurrentActivity" Width="200" Height="16"/>
 			<Label Name="lblStatusBar" HorizontalAlignment="Stretch"/>
 		</StatusBar>
+		<DockPanel Name="dpSidebar" LastChildFill="True" Width="210" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+			<TabControl Name="tcSidebar" DockPanel.Dock="Left" Width="200" Margin="0,0,0,0">
+				<TabItem Header="Bookmarks">
+					<StackPanel Name="spSidebar" Width="200">
+						<ListBox Name="lstBookmarks" Height="360" Margin="2,2,2,2" ContextMenu="{DynamicResource Bookmarks_Context_Menu}">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<WrapPanel>
+										<TextBlock Text="{Binding Description}" />
+									</WrapPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						<WrapPanel>
+							<Button Name="cmdAddBookmark" Click="cmdAddBookmark_Click"  Width="20" Height="20" Margin="2,2,2,2">
+								<Image Source="res/add.png" />
+							</Button>
+							<Button Name="cmdRemoveBookmark" Click="cmdRemoveBookmark_Click" Width="20" Height="20">
+								<Image Source="res/remove.png" Margin="2,2,2,2"/>
+							</Button>
+						</WrapPanel>
+					</StackPanel>
+				</TabItem>
+				<TabItem Header="Properties">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="20"/>
+							<RowDefinition Height="20"/>
+							<RowDefinition Height="20"/>
+							<RowDefinition Height="75"/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="50"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="Name" />
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="Length" />
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="Files" />
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="Folder" />
+						<TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" Text="{Binding Path=LengthAsTimeSpan, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Row="2" Grid.Column="1" FontWeight="Bold" Text="{Binding Path=Files.Count, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Row="3" Grid.Column="1" FontWeight="Bold" TextWrapping="WrapWithOverflow" Text="{Binding Path=Path, UpdateSourceTrigger=PropertyChanged}"/>
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</DockPanel>
 		<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Name="svAudiobooks">
 			<WrapPanel Name="wpAudiobooks">
 				<!-- empty because it will be dynamically filled with controls -->

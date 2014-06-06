@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace AudiobookPlayer
 {
-	public class Config 
+	public class Config : INotifyPropertyChanged
 	{
 		const string UPDATE_INTERVALL_IDENT = "update_intervall_seconds";
 		const string SMALL_SKIP_SECONDS_IDENT = "small_skip_seconds";
@@ -59,6 +59,16 @@ namespace AudiobookPlayer
 			no_of_background_threads = Properties.Settings.Default.BackgroundThreads;
 			audiobook_path = Properties.Settings.Default.AudiobookPath;
 		}
+
+		#region INotifyPropertyChanged Members
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			if (this.PropertyChanged != null)
+				this.PropertyChanged(this, e);
+		}
+		#endregion
 
 		#region Properties
 		public double AudiobookUpdateIntervall

@@ -28,6 +28,7 @@ namespace AudiobookPlayer
 			InitializeComponent();
 			ThreadPool.SetMaxThreads(config.NoOfThreads, config.NoOfThreads);
             ReadAudiobookFolder();
+			ToggleSidebar();
 		}
 
         void ReadAudiobookFolder()
@@ -102,10 +103,11 @@ namespace AudiobookPlayer
 				current_audiobook.Stop();
 				DeselectCurrentAudiobook();
 			}
-
+			this.DataContext = audiobook;
 			DeselectAllAudiobookControls();
 			current_audiobook = audiobook;
 			GetControlForAudiobook(audiobook).IsSelected = true;
+			lstBookmarks.ItemsSource = current_audiobook.Bookmarks;
 			UpdateAudiobookControls();
 		}
 
@@ -244,6 +246,41 @@ namespace AudiobookPlayer
 				book.Cover = selector.SelectedImage;
 		}
 
+		private void ToggleSidebar()
+		{
+			if (dpSidebar.Visibility == System.Windows.Visibility.Visible)
+			{
+				dpSidebar.Visibility = System.Windows.Visibility.Collapsed;
+				cmdSidebar.IsChecked = false;
+			}
+			else
+			{
+				dpSidebar.Visibility = System.Windows.Visibility.Visible;
+				cmdSidebar.IsChecked = true;
+			}
+		}
+
+		private void AddBookmark()
+		{
+			if(current_audiobook != null)
+				current_audiobook.Bookmarks.Add(new Bookmark(current_audiobook.Position));
+		}
+		
+		private void RemoveBookmark()
+		{
+
+		}
+
+		private void RenameBookmark()
+		{
+
+		}
+
+		private void ShowGotoDialog(Audiobook audiobook)
+		{
+			GotoDialog dialog = new GotoDialog(audiobook);
+			dialog.ShowDialog();
+		}
 		#region Control Events
 
 		private void RefreshAudiobooks_Click(object sender, RoutedEventArgs e)
@@ -328,6 +365,11 @@ namespace AudiobookPlayer
 			SelectCover(control.Audiobook);
 		}
 
+		private void cmdSidebar_Click(object sender, RoutedEventArgs e)
+		{
+			ToggleSidebar();
+		}
+
 		private AudiobookControl GetAudiobookControlFromContextMenuClick(object sender)
 		{
 			MenuItem menu_item = sender as MenuItem;
@@ -342,7 +384,37 @@ namespace AudiobookPlayer
 			return null;
 		}
 
+		private void Window_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.F9)
+				ToggleSidebar();
+		}
 		#endregion
+
+		private void cmdRenameBookmark_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void cmdDeleteBookmark_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void cmdAddBookmark_Click(object sender, RoutedEventArgs e)
+		{
+			AddBookmark();
+		}
+
+		private void cmdRemoveBookmark_Click(object sender, RoutedEventArgs e)
+		{
+			RemoveBookmark();
+		}
+
+		private void cmdGoTo_Click(object sender, RoutedEventArgs e)
+		{
+			ShowGotoDialog(current_audiobook);
+		}
 	}
 
 	class AudiobookScan

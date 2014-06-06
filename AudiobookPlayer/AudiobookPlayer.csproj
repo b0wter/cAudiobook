@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>0.7.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -91,11 +91,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AudioPlayer.cs" />
+    <Compile Include="Bookmark.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ImageSearch.cs" />
     <Compile Include="ImageSelector.xaml.cs">
       <DependentUpon>ImageSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GoToDialog.xaml.cs">
+      <DependentUpon>GoToDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValidationRules\TimeSpanValidationRule.cs" />
     <Compile Include="ValidationRules\IntRangeValidationRule.cs" />
     <Compile Include="SettingsDialog.xaml.cs">
       <DependentUpon>SettingsDialog.xaml</DependentUpon>
@@ -129,6 +134,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GoToDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,6 +219,19 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\thumbnails.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\full-screen-exit_0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\add.png" />
+    <Resource Include="res\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\list.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

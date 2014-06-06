@@ -3,36 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ImageSelector" Height="449" Width="568"
 		Icon="res/audiobook.png">
+	<DockPanel LastChildFill="True" >
+		<WrapPanel FlowDirection="RightToLeft" DockPanel.Dock="Bottom" Height="29">
+			<Button Name="cmdAbort" Content="Cancel" Width="75" Height="25" Margin="2,2,2,2"/>
+			<Button Name="cmdOk" Content="Ok" Width="75" Height="25" Margin="2,2,2,2"/>
+		</WrapPanel>
 	<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Name="svImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-		<Grid>
-			<WrapPanel Name="wpImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+			<Grid>
+				<WrapPanel Name="wpImages" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
 
-			</WrapPanel>
-			<Image Name="imgWaiting" Source="res/arrow-circular-alt-1.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
-				<Image.RenderTransform>
-					<RotateTransform/>
-				</Image.RenderTransform>
-				<Image.Style>
-					<Style>
-						<Style.Triggers>
-							<Trigger Property="Image.IsEnabled" Value="True">
-								<Trigger.EnterActions>
-									<BeginStoryboard>
-										<Storyboard>
-											<DoubleAnimation
+				</WrapPanel>
+				<Image Name="imgWaiting" Source="res/arrow-circular-alt-1.png" Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+					<Image.RenderTransform>
+						<RotateTransform/>
+					</Image.RenderTransform>
+					<Image.Style>
+						<Style>
+							<Style.Triggers>
+								<Trigger Property="Image.IsEnabled" Value="True">
+									<Trigger.EnterActions>
+										<BeginStoryboard>
+											<Storyboard>
+												<DoubleAnimation
 												Storyboard.TargetProperty="RenderTransform.Angle"
 												From="0"
 												To="360"
 												Duration="0:0:2"
 												RepeatBehavior="Forever" />
-										</Storyboard>
-									</BeginStoryboard>
-								</Trigger.EnterActions>
-							</Trigger>
-						</Style.Triggers>
-					</Style>
-				</Image.Style>
-			</Image>
-		</Grid>
-	</ScrollViewer>
+											</Storyboard>
+										</BeginStoryboard>
+									</Trigger.EnterActions>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</Image>
+			</Grid>
+		</ScrollViewer>
+	</DockPanel>
 </Window>
